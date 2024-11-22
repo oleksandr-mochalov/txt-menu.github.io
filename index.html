@@ -1,0 +1,35 @@
+<!-- index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu</title>
+    <link rel="stylesheet" href="public/styles/main.css" />
+    <script src="public/scripts/menuData.js" defer></script>
+    <script src="public/scripts/main.js" defer></script>
+    <script src="public/scripts/menuItem.js" defer></script>
+  </head>
+  <body>
+    <div class="search-container">
+      <div class="search-lable">Search</div>
+      <input id="search-input" class="search-input" type="text" placeholder="" />
+      <div class="search-clear clickable" onclick="clearSearch()">
+        <img class="search-icon" src="public/images/close.svg" alt="Clear" />
+      </div>
+    </div>
+    
+    <div id="menu" class="menu"></div>
+
+    <div class="copy-notification">
+      <div class="copy-notification-text">
+        Copied ✔︎
+      </div>
+    </div>
+
+    <script>
+      window.onload = function() { buildModel(); };
+      const searchField = document.getElementById('search-input');
+      searchField.addEventListener('keyup', function() { showBySearch(searchField.value); });
+    </script>
+  </body>
+</html>
