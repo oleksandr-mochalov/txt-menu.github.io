@@ -112,3 +112,16 @@ function clearSearch() {
   const search = document.getElementById("search-input");
   search.value = "";
 }
+
+function runPreProcess() {
+  const src = document.getElementById("preprocess-input").value;
+  const target = document.getElementById("preprocess-result");
+  const result = preProcessMessage(src);
+  target.innerText = result;
+}
+
+function copyPreprocessResult() {
+  const target = document.getElementById("preprocess-result");
+  navigator.clipboard.writeText(target.innerText);
+  showCopyNotification();
+}

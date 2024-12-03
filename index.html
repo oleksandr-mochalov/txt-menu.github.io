@@ -8,8 +8,27 @@
     <script src="public/scripts/menuData.js" defer></script>
     <script src="public/scripts/main.js" defer></script>
     <script src="public/scripts/menuItem.js" defer></script>
+    <script src="public/scripts/messagePreProcessing.js" defer></script>
   </head>
   <body>
+    <div class="preprocess-container">
+      <div class="preprocess-subcontainer">
+        <div class="preprocess-lable">Pre Process</div>
+        <input id="preprocess-input" class="preprocess-input" type="text" placeholder="" /> 
+        <div class="preprocess-run clickable" onclick="runPreProcess()">
+          <img class="search-icon" src="public/images/close.svg" alt="Clear" />
+        </div>
+      </div>  
+    </div>  
+    <div class="preprocess-subcontainer">
+      <div class="preprocess-lable">Result</div>
+      <div class="preprocess-result" id="preprocess-result"></div>
+      <div class="preprocess-result-copy clickable" onclick="copyPreprocessResult()">
+        <img class="copy-icon" src="public/images/copy.svg" alt="Clear" />
+      </div>
+    </div>
+    <!-- horisontal line -->
+    <hr class="line" />
     <div class="search-container">
       <div class="search-lable">Search</div>
       <input id="search-input" class="search-input" type="text" placeholder="" />
@@ -30,6 +49,9 @@
       window.onload = function() { buildModel(); };
       const searchField = document.getElementById('search-input');
       searchField.addEventListener('keyup', function() { showBySearch(searchField.value); });
+
+      const preprocessField = document.getElementById('preprocess-input');
+      preprocessField.addEventListener('keyup', function() { runPreProcess(); });
     </script>
   </body>
 </html>

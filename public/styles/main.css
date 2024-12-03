@@ -182,7 +182,8 @@ body {
   flex-direction: row;
 }
 
-.search-icon {padding: 3px;
+.search-icon {
+  padding: 3px;
   height: 26px;
   width: 26px;
   filter: invert(70%) brightness(80%);
@@ -190,4 +191,44 @@ body {
 
 .search-icon:hover {
   filter: invert(0%);
+}
+
+.copy-icon {
+  padding: 3px;
+  height: 26px;
+  width: 26px;
+  filter: invert(70%) brightness(80%);
+}
+.copy-icon:hover {
+  filter: invert(0%);
+}
+
+.preprocess-subcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+
+.preprocess-lable {
+  margin-right: 8px;
+}
+
+.preprocess-input {
+  width: 80%;
+}
+.preprocess-result {
+  width: 80%;
+  padding: 5px;
+  border: solid 1px #0000005e;
+  border-radius: 5px;
+  background-color: #00000012;
+  font-size: 18pt;
+  height: 20px;
+}
+.preprocess-lable {
+  margin-right: 8px;
+  min-width: 80px;
+
 }
