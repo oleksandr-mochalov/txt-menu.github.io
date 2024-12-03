@@ -24,7 +24,9 @@ function removeCustomWords(message) {
     .replace(/both/gi, "")
     .replace(/toppings|topping/gi, "")
     .replace(/(?<!salt )\b(packets|packet)/gi, "")
-    .replace(/pls|plz|please/gi, "");
+    .replace(/pls|plz|please/gi, "")
+    .replace(/i'd|i would/gi, "")
+    .replace(/like/gi, "");
 }
 
 /**
