@@ -225,7 +225,7 @@ body {
   border-radius: 5px;
   background-color: #00000012;
   font-size: 18pt;
-  height: 20px;
+  min-height: 20px;
 }
 .preprocess-lable {
   margin-right: 8px;
