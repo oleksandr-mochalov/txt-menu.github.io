@@ -141,7 +141,7 @@ function replaceNuggetsWithSystemValue(message) {
   };
 
   const TITLE =
-    "((chick fil a|chick-fil-a|chickfila|chicken|grilled)?\\s?nuggets)";
+    "((chick fil a|chick-fil-a|chickfila|chicken|grilled)?\\s?(nugget|nuggets))";
   const DIGITS = "(5|8|12|30|four|eight|twelve|thirty)";
   const SEPARATOR = "(\\s|\\b)";
   const COUNT = "(ct|count)";
@@ -264,7 +264,8 @@ function pluralToSingle(message) {
     .replace("cokes", "coke")
     .replace("coffees", "coffee")
     .replace("juices", "juice")
-    .replace("milkshakes", "milkshake");
+    .replace("milkshakes", "milkshake")
+    .replace(/milks(?!hake)/, "milk");
 }
 
 /** Makes custom input word "honeymustard" to be parsed as "honey mustard" item
@@ -313,6 +314,9 @@ function preProcessMessage(message) {
   result = removePunctuation(result);
   result = removeArticles(result);
   result = removeSideOf(result);
+  result = replaceStripsWithSystemValue(result);
+  result = replaceNuggetsWithSystemValue(result);
+  result = replaceMinisWithSystemValue(result);
   result = removeCustomWords(result);
   result = removeAnd(result);
   result = removeSome(result);
@@ -320,9 +324,6 @@ function preProcessMessage(message) {
   result = removeDoubleSpaces(result);
   result = customSauce(result);
   result = comboToMeal(result);
-  result = replaceStripsWithSystemValue(result);
-  result = replaceNuggetsWithSystemValue(result);
-  result = replaceMinisWithSystemValue(result);
   result = replaceIceDream(result);
 
   return result;
