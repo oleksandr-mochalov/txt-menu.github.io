@@ -239,6 +239,12 @@ function drPepper(message) {
   return message.replace(/dr[.\s]*pepper/gi, "drpepper");
 }
 
+function pickupMethods(message) {
+  return message
+    .replace(/drive-thru/gi, "drive thru")
+    .replace(/drive-through/gi, "drive thru");
+}
+
 function pluralToSingle(message) {
   return message
     .replace("sandwiches", "sandwich")
@@ -300,6 +306,7 @@ function replaceIceDream(message) {
  */
 function preProcessMessage(message) {
   let result = message.toLowerCase();
+  result = pickupMethods(result);
   result = drPepper(result);
   result = customHoneyMustard(result);
   result = replaceWithShortOnFull(result);
