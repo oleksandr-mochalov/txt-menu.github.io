@@ -300,6 +300,25 @@ function replaceIceDream(message) {
   return message.replace("ice dream", "icedream");
 }
 
+function replaceQuantities(message) {
+  const words = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
+  return message.replace(
+    /(?<!(\d|\/))\d(?!(\d|\/|ct|-|\sct|count|\scount))/gi,
+    (match) => words[match]
+  );
+}
+
 /**
  * Pre-processes the message by removing articles, "side of", punctuation, "and", and double spaces
  * @param {string} message - Input message
@@ -325,6 +344,7 @@ function preProcessMessage(message) {
   result = customSauce(result);
   result = comboToMeal(result);
   result = replaceIceDream(result);
+  result = replaceQuantities(result);
 
   return result;
 }
