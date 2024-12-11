@@ -26,7 +26,8 @@ function removeCustomWords(message) {
     .replace(/(?<!salt )\b(packets|packet)/gi, "")
     .replace(/pls|plz|please/gi, "")
     .replace(/i'd|i would/gi, "")
-    .replace(/like/gi, "");
+    .replace(/like/gi, "")
+    .replace(/\b(with|want|i|can|you|will|would|could|get|have)\b/gi, "");
 }
 
 /**
@@ -89,11 +90,11 @@ function replaceStripsWithSystemValue(message) {
 
   const replace = (matchGroup, countGroup) => {
     const cnt = countGroup
-      .replace("two", "2")
-      .replace("double", "2")
-      .replace("three", "3")
-      .replace("four", "4")
-      .replace("eight", "8");
+      .replaceAll("two", "2")
+      .replaceAll("double", "2")
+      .replaceAll("three", "3")
+      .replaceAll("four", "4")
+      .replaceAll("eight", "8");
     // .replace('twelve', '12')
     // .replace('thirty', '30')
     const result = placeholders[cnt];
@@ -141,7 +142,7 @@ function replaceNuggetsWithSystemValue(message) {
   };
 
   const TITLE =
-    "((chick fil a|chick-fil-a|chickfila|chicken|grilled)?\\s?(nugget|nuggets))";
+    "((chick fil a|chick-fil-a|chickfila|chicken|grilled)?\\s?(nuggets|nugget))";
   const DIGITS = "(5|8|12|30|four|eight|twelve|thirty)";
   const SEPARATOR = "(\\s|\\b)";
   const COUNT = "(ct|count)";
@@ -155,10 +156,10 @@ function replaceNuggetsWithSystemValue(message) {
 
   const replace = (matchGroup, countGroup) => {
     const cnt = countGroup
-      .replace("five", "5")
-      .replace("eight", "8")
-      .replace("twelve", "12")
-      .replace("thirty", "30");
+      .replaceAll("five", "5")
+      .replaceAll("eight", "8")
+      .replaceAll("twelve", "12")
+      .replaceAll("thirty", "30");
     const key = matchGroup.includes("grilled") ? "grilled" : "regular";
     const result = placeholders[key][cnt];
     return result
@@ -207,7 +208,7 @@ function replaceMinisWithSystemValue(message) {
   };
 
   const replace = (matchGroup, countGroup) => {
-    const cnt = countGroup.replace("four", "4").replace("ten", "10");
+    const cnt = countGroup.replaceAll("four", "4").replaceAll("ten", "10");
     const result = placeholders[cnt];
     return result
       ? message.replace(new RegExp(matchGroup, "gi"), result)
@@ -247,25 +248,25 @@ function pickupMethods(message) {
 
 function pluralToSingle(message) {
   return message
-    .replace("sandwiches", "sandwich")
-    .replace("sauces", "sauce")
-    .replace("dressings", "dressing")
-    .replace("meals", "meal")
-    .replace("filets", "filet")
-    .replace("wraps", "wrap")
-    .replace("sunjoys", "sunjoy")
-    .replace("lemonades", "lemonade")
-    .replace("biscuits", "biscuit")
-    .replace("burritos", "burrito")
-    .replace("bowls", "bowl")
-    .replace("muffins", "muffin")
-    .replace("salads", "salad")
-    .replace("cups", "cup")
-    .replace("cokes", "coke")
-    .replace("coffees", "coffee")
-    .replace("juices", "juice")
-    .replace("milkshakes", "milkshake")
-    .replace(/milks(?!hake)/, "milk");
+    .replaceAll("sandwiches", "sandwich")
+    .replaceAll("sauces", "sauce")
+    .replaceAll("dressings", "dressing")
+    .replaceAll("meals", "meal")
+    .replaceAll("filets", "filet")
+    .replaceAll("wraps", "wrap")
+    .replaceAll("sunjoys", "sunjoy")
+    .replaceAll("lemonades", "lemonade")
+    .replaceAll("biscuits", "biscuit")
+    .replaceAll("burritos", "burrito")
+    .replaceAll("bowls", "bowl")
+    .replaceAll("muffins", "muffin")
+    .replaceAll("salads", "salad")
+    .replaceAll("cups", "cup")
+    .replaceAll("cokes", "coke")
+    .replaceAll("coffees", "coffee")
+    .replaceAll("juices", "juice")
+    .replaceAll("milkshakes", "milkshake")
+    .replace(/milks(?!hake)/g, "milk");
 }
 
 /** Makes custom input word "honeymustard" to be parsed as "honey mustard" item
@@ -293,11 +294,11 @@ function comboToMeal(message) {
 }
 
 function replaceWithShortOnFull(message) {
-  return message.replace(/w\/o/gi, "no").replace(/w\//gi, "with");
+  return message.replace(/w\/o/gi, "no").replace(/w\//gi, "");
 }
 
 function replaceIceDream(message) {
-  return message.replace("ice dream", "icedream");
+  return message.replaceAll("ice dream", "icedream");
 }
 
 function replaceQuantities(message) {
