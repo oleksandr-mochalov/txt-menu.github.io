@@ -1,3 +1,6 @@
+const QUANTITY_REGEX =
+  /\b(?!(\d+%|\d+\/\d+))(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b/gi;
+
 /**
  * Removes all articles from the message. But keep the "a" in the "chick-fil-a" and "chick fil a" phrases
  * @param {string} message - Input message
@@ -27,7 +30,8 @@ function removeCustomWords(message) {
     .replace(/pls|plz|please/gi, "")
     .replace(/i'd|i would/gi, "")
     .replace(/like/gi, "")
-    .replace(/\b(with|want|i|can|you|will|would|could|get|have)\b/gi, "");
+    .replace(/\b(with|want|i |can|you|will|would|could|get|have)\b/gi, "")
+    .replace(/\b(added)\b/gi, "add");
 }
 
 /**
@@ -153,6 +157,7 @@ function replaceNuggetsWithSystemValue(message) {
   const countTitleRe = new RegExp(
     `${DIGITS}${SEPARATOR}?${COUNT}?${SEPARATOR}?${TITLE}`
   );
+  const countRe = new RegExp(`^${DIGITS}`);
 
   const replace = (matchGroup, countGroup) => {
     const cnt = countGroup
@@ -173,7 +178,10 @@ function replaceNuggetsWithSystemValue(message) {
     const countTitleReMatch = message.match(countTitleRe);
 
     if (titleCountReMatch?.[2]) {
-      message = replace(titleCountReMatch[0], titleCountReMatch[4]);
+      const countGroup =
+        titleCountReMatch.find((element) => countRe.test(element)) ||
+        titleCountReMatch[4];
+      message = replace(titleCountReMatch[0], countGroup);
     } else if (countTitleReMatch?.[1]) {
       message = replace(countTitleReMatch[0], countTitleReMatch[1]);
     } else {
@@ -320,13 +328,43 @@ function replaceQuantities(message) {
   );
 }
 
+function removeCounts(message) {
+  return message.replace(QUANTITY_REGEX, "");
+}
+
+function fixTypos(message) {
+  const typosConfig = {
+    sandwich: ["sandwitch", "sandwic", "sandwiche", "sanwich"],
+    pickles: ["pickels", "pickls", "pickes", "pikles"],
+    lettuce: ["letuce", "letucee", "letuce"],
+    tomato: ["tomatoe", "tomat"],
+    nuggets: ["nugets", "nugget", "nuggetts"],
+    strips: ["strips", "stripes", "strip"],
+  };
+  for (const [correct, typos] of Object.entries(typosConfig)) {
+    for (const typo of typos) {
+      message = message.replace(
+        new RegExp(`([^a-z]|^)${typo}([^a-z]|$)`, "gi"),
+        `$1${correct}$2`
+      );
+    }
+  }
+  return message;
+}
+
 /**
  * Pre-processes the message by removing articles, "side of", punctuation, "and", and double spaces
  * @param {string} message - Input message
  * @returns {string} - Pre-processed message
  */
 function preProcessMessage(message) {
+  message = message
+    ?.replace(/^[^a-z0-9()_]*/gi, "")
+    ?.replace(/[^a-z0-9()_]*$/gi, "")
+    ?.trim();
+  let intermediateResult = message;
   let result = message.toLowerCase();
+  result = fixTypos(result);
   result = pickupMethods(result);
   result = drPepper(result);
   result = customHoneyMustard(result);
@@ -347,5 +385,9 @@ function preProcessMessage(message) {
   result = replaceIceDream(result);
   result = replaceQuantities(result);
 
-  return result;
+  // Store Input Message with quantities for Indexing
+  intermediateResult = result;
+
+  result = removeCounts(result);
+  return { result, intermediateResult };
 }
