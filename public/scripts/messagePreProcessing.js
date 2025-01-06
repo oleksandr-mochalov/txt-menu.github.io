@@ -198,7 +198,7 @@ function replaceNuggetsWithSystemValue(message) {
  */
 function replaceMinisWithSystemValue(message) {
   const TITLE =
-    "((chick fil a|chick-fil-a|chickfila )?\\s?(chick-n-|chick n |chickn)?minis)";
+    "((chick fil a|chick-fil-a|chickfila )?\\s?(chick-n-|chick n |chickn|chicken)?\\s?minis)";
   const DIGITS = "(4|10|four|ten)";
   const SEPARATOR = "(\\s|\\b)";
   const COUNT = "(ct|count)";
