@@ -117,6 +117,7 @@ function runPreProcess() {
   const src = document.getElementById("preprocess-input").value;
   const target = document.getElementById("preprocess-result");
   const { result } = preProcessMessage(src);
+
   target.innerText = result;
 }
 
